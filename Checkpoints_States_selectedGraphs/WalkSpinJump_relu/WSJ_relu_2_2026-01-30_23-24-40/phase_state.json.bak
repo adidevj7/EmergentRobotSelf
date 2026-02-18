@@ -1,0 +1,7 @@
+{
+  "cycle": 33,
+  "phase_idx": 2,
+  "retry": 2,
+  "incoming_for_play": "/home/adi/projects/CreativeMachinesAnt/Isaac/checkpoints/WSJ_att69_relu_2_2026-01-30_23-24-40/models/c034_b02_spin_plateau_2026-02-07_14-12-29_for_play.pth",
+  "done": false
+}

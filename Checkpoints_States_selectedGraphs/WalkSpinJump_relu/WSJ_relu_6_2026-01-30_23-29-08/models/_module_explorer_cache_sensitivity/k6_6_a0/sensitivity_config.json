@@ -1,0 +1,6 @@
+{
+  "tag": "k6_6_a0",
+  "k_min": 6,
+  "k_max": 6,
+  "alpha_small_k": 0.0
+}

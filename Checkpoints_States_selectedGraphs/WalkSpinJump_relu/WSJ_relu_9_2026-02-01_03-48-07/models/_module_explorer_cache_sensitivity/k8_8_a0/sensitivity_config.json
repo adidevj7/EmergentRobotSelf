@@ -1,0 +1,6 @@
+{
+  "tag": "k8_8_a0",
+  "k_min": 8,
+  "k_max": 8,
+  "alpha_small_k": 0.0
+}

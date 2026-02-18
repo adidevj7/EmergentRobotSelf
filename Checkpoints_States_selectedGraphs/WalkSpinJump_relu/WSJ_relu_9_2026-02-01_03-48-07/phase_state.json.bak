@@ -1,0 +1,7 @@
+{
+  "cycle": 33,
+  "phase_idx": 0,
+  "retry": 0,
+  "incoming_for_play": "/home/adi/projects/CreativeMachinesAnt/Isaac/checkpoints/WSJ_att69_relu_9_2026-02-01_03-48-07/models/c033_b03_jump_plateau_2026-02-08_14-48-27_for_play.pth",
+  "done": false
+}

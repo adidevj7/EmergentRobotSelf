@@ -1,0 +1,10 @@
+{
+  "cycle": 50,
+  "done": true,
+  "incoming_for_play": "/home/adi/projects/CreativeMachinesAnt/Isaac/checkpoints/WSJ_att69_relu_5_2026-01-30_23-28-40/failed/jump_c50_retry2/models/c050_b03_jump_plateau_2026-02-12_20-17-45_for_play.pth",
+  "last_checkpoint": "/home/adi/projects/CreativeMachinesAnt/Isaac/checkpoints/WSJ_att69_relu_5_2026-01-30_23-28-40/models/c033_b03_jump_plateau_2026-02-07_12-19-00_for_play.pth",
+  "phase_idx": 0,
+  "resume_after_jump": true,
+  "resume_timestamp": "2026-02-09 08:27:02",
+  "retry": 0
+}

@@ -1,0 +1,51 @@
+# Isaac/cfg/ant_sac.yaml
+# RL-Games SAC config for Isaac Ant (conservative, stable defaults)
+
+params:
+  seed: 42
+
+  algo:
+    name: sac
+
+  model:
+    name: soft_actor_critic
+    separate: false
+
+  network:
+    name: soft_actor_critic
+    separate: true
+    space:
+      continuous:
+        mlp:
+          units: [256, 256]
+          activation: relu
+    log_std_bounds: [-7, 2]
+
+  config:
+    # core
+    env_name: rlgpu
+    gamma: 0.99
+    tau: 0.005
+
+    # SAC hyperparams
+    batch_size: 1024
+    replay_buffer_size: 1000000
+
+    # Off-policy startup ({random seed steps} before learning)
+    random_steps: 10000
+
+    # Runner / logging
+    max_epochs: 10000
+    save_best_after: 50
+    save_frequency: 50
+    mixed_precision: false
+    multi_gpu: false
+    normalize_input: true
+    normalize_value: true
+
+  # forwarded into Isaac env wrapper (CLI --task/--num_envs still win)
+  env:
+    name: Isaac-Ant-Direct-v0
+    num_envs: 128
+    num_steps_per_episode: 16
+    seed: 42

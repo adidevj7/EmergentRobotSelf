@@ -1,0 +1,12 @@
+env:
+  episode_length_steps: 2000
+
+terminations:
+  only_timeout: true
+
+rewards:
+  scales:
+    lin_vel_x: 0.0
+    torques: -0.10
+    contact_forces: -0.0002
+    alive: 0.0

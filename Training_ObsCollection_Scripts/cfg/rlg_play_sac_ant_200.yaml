@@ -1,0 +1,83 @@
+# rlg_play_sac_ant.yaml
+# Copy of IsaacLab's rl_games_ppo_cfg.yaml with minimal, schema-safe edits to run SAC.
+# Keep the same structure to satisfy Hydra struct mode.
+
+params:
+  seed: 42
+
+  env:
+    clip_actions: 1.0
+
+  # === switched from PPO to SAC ===
+  algo:
+    name: sac
+
+  # === switched model to SAC variant ===
+  model:
+    name: soft_actor_critic
+
+  # === network section kept in-place; set SAC-friendly head + sizes ===
+  network:
+    name: soft_actor_critic
+    separate: True
+    space:
+      continuous:
+        mu_activation: None
+        sigma_activation: None
+        mu_init:
+          name: default
+        sigma_init:
+          name: const_initializer
+          val: 0
+        fixed_sigma: True
+    mlp:
+      units: [200,200]
+      activation: elu
+      d2rl: False
+      initializer:
+        name: default
+      regularizer:
+        name: None
+
+  # === tell player to load a checkpoint ===
+  load_checkpoint: True
+  # !!! update this path if your run directory changes
+  load_path: '/home/adi/projects/CreativeMachinesAnt/Isaac/logs/rl_games/ant_direct/2025-09-22_11-40-35/nn/converted_for_play.pth'
+
+  # leave the rest of PPO runtime config as-is; player will ignore PPO-specific bits under SAC
+  config:
+    name: ant_direct
+    env_name: rlgpu
+    device: 'cuda:0'
+    device_name: 'cuda:0'
+    multi_gpu: False
+    ppo: True          # keep field to satisfy schema; harmless for SAC player
+    mixed_precision: True
+    normalize_input: False
+    normalize_value: True
+    value_bootstrap: True
+    num_actors: -1     # overridden by --num_envs at runtime
+    reward_shaper:
+      scale_value: 0.6
+    normalize_advantage: True
+    gamma: 0.99
+    tau: 0.95
+    learning_rate: 3e-4
+    lr_schedule: adaptive
+    schedule_type: legacy
+    kl_threshold: 0.008
+    score_to_win: 20000
+    max_epochs: 500
+    save_best_after: 100
+    save_frequency: 50
+    grad_norm: 1.0
+    entropy_coef: 0.0
+    truncate_grads: True
+    e_clip: 0.2
+    horizon_length: 16
+    minibatch_size: 32768
+    mini_epochs: 4
+    critic_coef: 2
+    clip_value: True
+    seq_length: 4
+    bounds_loss_coef: 0.0001

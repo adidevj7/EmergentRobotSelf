@@ -1,0 +1,65 @@
+seed: 42
+
+params:
+  algo:
+    name: sac
+
+  model:
+    name: soft_actor_critic
+
+  network:
+    name: soft_actor_critic
+    separate: true
+    mlp:
+      units: [175,175]
+      activation: elu
+      d2rl: false
+      initializer:
+        name: default
+    log_std_bounds: [-20.0, 2.0]
+    space:
+      continuous:
+        mu_activation: null
+        sigma_activation: null
+
+  config:
+    print_stats: false
+
+    gamma: 0.99
+    critic_tau: 0.003
+    batch_size: 32768
+    replay_buffer_size: 1000000
+    num_warmup_steps: 10000
+    train_every_n_steps: 1
+    updates_per_step: 32
+
+    mixed_precision: true
+
+    actor_lr: 0.0003
+    critic_lr: 0.0003
+    alpha_lr: 0.003
+    learnable_temperature: true
+    init_alpha: 0.2
+    target_entropy: -8.0
+
+    grad_norm: 1.0
+    bound_loss_type: regularization
+
+    reward_shaper:
+      scale_value: 1.0
+
+    env_name: isaaclab
+    num_actors: 8192
+    vecenv_type: LOCAL
+    train_dir: /home/adi/projects/CreativeMachinesAnt/Isaac/logs/rl_games/ant_walk
+    name: placeholder
+    device: cuda
+
+    max_env_steps: 500000
+    max_epochs: 500000
+
+    save_best_after: 0
+    save_frequency: 1000
+    record_video: false
+    record_best_video: false
+    record_stats: true

@@ -1,0 +1,6 @@
+{
+  "tag": "k3_14_a0p05",
+  "k_min": 3,
+  "k_max": 14,
+  "alpha_small_k": 0.05
+}
