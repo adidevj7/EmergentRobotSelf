@@ -9,4 +9,3 @@ __pycache__/
 .env
 
 .git_old_backup/
-Checkpoints_States_selectedGraphs/
