@@ -1,0 +1,7 @@
+{
+  "cycle": 124,
+  "phase_idx": 0,
+  "retry": 0,
+  "incoming_for_play": "/home/adi/projects/CreativeMachinesAnt/Isaac/checkpoints/WSJ_att69_WalkOnly_relu_42_2026-02-01_03-48-47/models/c124_b01_walk_plateau_2026-02-04_18-15-22_for_play.pth",
+  "done": false
+}
