@@ -1,0 +1,12 @@
+env:
+  episode_length_steps: 1000     # fixed horizon in steps
+
+terminations:
+  only_timeout: true             # disable "health" terms; rely on time_out
+
+rewards:
+  scales:
+    lin_vel_x: 1.0               # forward progress
+    torques: -0.05           # control cost (negative = penalty)
+    contact_forces: -0.0002      # contact cost penalty
+    alive: 0.0                   # no alive bonus

@@ -1,0 +1,39 @@
+# (unchanged except the save cadence — fewer best-saves, still periodic ckpts)
+params:
+  seed: 42
+  algo:
+    name: sac
+  model:
+    name: soft_actor_critic
+  network:
+    name: soft_actor_critic
+    separate: true
+    space:
+      continuous:
+        mu_activation: None
+        sigma_activation: None
+    mlp:
+      units: [256, 256]
+      activation: elu
+      initializer:
+        name: default
+    log_std_bounds: [-7, 2]
+  config:
+    env_name: isaaclab
+    num_actors: 1
+    gamma: 0.99
+    critic_tau: 0.005
+    batch_size: 2048
+    replay_buffer_size: 1000000
+    num_warmup_steps: 10000
+    actor_lr: 0.0003
+    critic_lr: 0.0003
+    alpha_lr: 0.003
+    learnable_temperature: true
+    init_alpha: 0.2
+    target_entropy: auto
+    save_best_after: 50000      # throttle "best" saving more
+    save_frequency: 20000       # fewer periodic checkpoints
+    grad_norm: 1.0
+    bound_loss_type: regularization
+    reward_shaper: {}

@@ -1,0 +1,82 @@
+# /home/adi/projects/CreativeMachinesAnt/Isaac/cfg/rlg_walk_new_v1.yaml
+seed: 42
+
+params:
+  algo:
+    name: sac
+
+  model:
+    name: soft_actor_critic
+
+  network:
+    name: soft_actor_critic
+    separate: true
+    mlp:
+      # ↑ Wider MLP → bigger matmuls → higher GPU util
+      units: [256,256]
+      activation: elu
+      d2rl: false
+      initializer:
+        name: default
+    # Required by this rl_games build to avoid None errors in actor forward
+    log_std_bounds: [-20.0, 2.0]
+    space:
+      continuous:
+        mu_activation: null
+        sigma_activation: null
+
+  config:
+    # Quiet rl_games' per-step/fps spam; we print our own rolling stats
+    print_stats: false
+
+    # SAC core
+    gamma: 0.99
+    critic_tau: 0.005
+
+    # ↑ Larger batches keep the GPU busier during backprop
+    batch_size: 16384
+
+    # Optional: give replay more headroom for larger batches
+    replay_buffer_size: 2000000
+
+    num_warmup_steps: 10000        # you can override at CLI via --warmup_steps
+    train_every_n_steps: 1
+
+    # ↑ Do multiple learner updates per env step to raise compute density
+    updates_per_step: 2
+
+    # ↑ Mixed precision to leverage tensor cores ({AMP})
+    mixed_precision: true
+
+    actor_lr: 0.0003
+    critic_lr: 0.0003
+    alpha_lr: 0.003
+    learnable_temperature: True
+    init_alpha: 0.2
+    target_entropy: -8.0           # action_dim=8; "auto" also works if preferred
+
+    grad_norm: 1.0
+    bound_loss_type: regularization
+
+    reward_shaper:
+      scale_value: 1.0
+
+    # The script patches these at runtime, but default values are provided
+    env_name: isaaclab
+    num_actors: 36                  # overridden by --num_envs
+    vecenv_type: LOCAL
+    train_dir: /home/adi/projects/CreativeMachinesAnt/Isaac/logs/rl_games/ant_walk
+    name: placeholder
+    device: cuda
+
+    # Stop criteria (the script can override with --max_episodes → max_env_steps)
+    max_env_steps: 500000
+    max_epochs: 500000
+
+    # Checkpointing and logging (script will override to “effectively never”)
+    save_best_after: 0
+    save_frequency: 1000
+    record_video: False
+    record_best_video: False
+    record_stats: True
+    

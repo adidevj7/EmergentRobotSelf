@@ -1,0 +1,13 @@
+env:
+  episode_length_steps: 1000
+
+terminations:
+  only_timeout: true
+
+rewards:
+  scales:
+    # You’ll likely swap lin_vel_x→yaw_rate or add a 'spin' term if exposed.
+    lin_vel_x: 0.0
+    torques: -0.1
+    contact_forces: -0.0002
+    alive: 0.0
