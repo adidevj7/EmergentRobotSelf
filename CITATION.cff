@@ -1,6 +1,6 @@
-cff-version: 1.2.0
+cff-version: 1.3.0
 message: "If you use this code or the accompanying model checkpoints, please cite our work."
-title: "Evidence of an Emergent Self in Multibehavior Robot Training"
+title: "Evidence of an Emergent Self in Continual Robot Learning"
 authors:
   - family-names: "Jhunjhunwala"
     given-names: "Adidev"
@@ -9,6 +9,6 @@ authors:
   - family-names: "Lipson"
     given-names: "Hod"
 version: 0.1.0
-date-released: 2026-02-18
+date-released: 2026-03-25
 license: "MIT"
 repository-code: "https://github.com/adidevj7/EmergentRobotSelf"
