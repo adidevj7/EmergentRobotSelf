@@ -1,247 +1,265 @@
 # Evidence of an Emergent “Self” in Continual Robot Learning
 
-This repository contains the analysis notebooks, cached checkpoints / state-derived artifacts, and training utilities used for the paper **“Evidence of an Emergent ‘Self’ in Continual Robot Learning.”** The project studies whether continual learning leads to a persistent internal subnetwork that changes less than the rest of the policy when new behaviors are acquired.
+This repository contains the analysis notebooks, cached artifacts, and training utilities used for the paper **“Evidence of an Emergent ‘Self’ in Continual Robot Learning.”** The project studies whether continual learning causes a robot policy to develop a persistent internal subnetwork that changes less than the rest of the network as new behaviors are learned.
 
 <p align="center">
-  <img src="README_assets/Figure1.png" alt="Main paper figure" width="900"/>
+  <img src="README_assets/SimplepProcFlat_v3.png" alt="Continual learning produces a stable self-like core" width="900"/>
 </p>
 
-## Overview
+Compared to a single-task baseline, multi-behavior training yields a subnetwork that remains stable across behaviors, while other components vary more strongly. In the language of the paper, this is the emergence of a **persistent self-like core**. :contentReference[oaicite:1]{index=1}
 
-Our central idea is simple: when a robot learns continuously, some parts of its policy may remain comparatively stable while other parts reorganize to support new behaviors. We use **MAPS** ({Modular Alignment and Persistence Scoring}) to identify these persistent subnetworks and compare them across training phases.
+---
+
+## What this repository contains
 
 This repository is organized around three practical goals:
 
-1. **Understand the main result** through the paper figures.
-2. **Reproduce the analysis plots quickly** from cached outputs already included in the repository.
-3. **Trace the full pipeline** from training to recording states to figure generation.
+1. **Understand the main result** through the core paper figures
+2. **Regenerate the analysis plots quickly** from cached artifacts already included in the repository
+3. **Trace the full pipeline** from training, to recording states, to MAPS analysis, to figure generation
 
-For most users, the fastest path is:
+For most users, the fastest route is:
 
-- use the cached outputs in `Checkpoints_States_selectedGraphs/`
-- open the relevant notebook in `AnalysisScripts/`
-- update any model / file paths if needed
+- use the cached artifacts in `Checkpoints_States_selectedGraphs/`
+- open the corresponding notebook in `AnalysisScripts/`
+- update the model / checkpoint paths if needed
 - run the plotting cells
 
-For users who want the full pipeline from scratch, see [`TRAINING_AND_SETUP.md`](TRAINING_AND_SETUP.md).
+For full training and rollout generation, see [`TRAINING_AND_SETUP.md`](TRAINING_AND_SETUP.md).
 
 ---
 
 ## Repository structure
 
-### Main analysis
+### Analysis notebooks and scripts
 - `AnalysisScripts/`  
-  Main notebooks and scripts used to produce the paper figures and statistical analyses.
+  Main analysis notebooks and scripts used to generate the figures and statistics in the paper
 
-### Cached checkpoints / condensed outputs / plot inputs
+### Cached checkpoints / states / condensed outputs
 - `Checkpoints_States_selectedGraphs/`  
-  Contains the cached information needed to reproduce the main graphs quickly. In many cases, this folder lets you skip the most expensive recomputation step.
+  Cached data products used to regenerate the plots quickly without rerunning the full expensive analysis
 
-### Training, rollout recording, and helper scripts
+### Training, state collection, and rollout helpers
 - `Training_ObsCollection_Scripts/`  
-  Training launcher, recording scripts, rollout utilities, sim-to-real helpers, and configuration files.
+  Isaac-based training launcher, rollout recording utilities, state collection scripts, playback helpers, and configs
 
 ### README figures
 - `README_assets/`  
-  Images shown in this README. The figure filenames below assume they match the paper figure naming.
+  Images used in this README
 
 ---
 
-## Reproduction paths
+## Pipeline overview
 
-There are three increasingly expensive ways to use this repository:
+The full workflow in this project is:
 
-### 1. Fastest: plot from cached condensed outputs
-This is the recommended path for most readers. The repository already includes cached artifacts in `Checkpoints_States_selectedGraphs/`, and many notebooks are structured so that the later plotting blocks can be run directly.
-
-### 2. Recompute MAPS outputs from existing checkpoints / states
-This reproduces the intermediate data products again from the stored checkpoints and recorded states. This usually takes **a couple of hours** across runs.
-
-### 3. Full pipeline from scratch
-This includes training policies, recording rollouts / states, recomputing MAPS, and regenerating the figures. On a single **RTX 2080 Ti**, training from scratch is on the order of **about a week** depending on the run.
-
----
-
-## Figure guide
-
-The sections below show the main paper figures and point to the exact notebook or script used to generate them.
-
----
-
-## Figure 2, Figure 3, and smaller panels within Figure 6
+1. **Train policies** across single-task or continual multi-behavior schedules
+2. **Record states / rollouts / videos** from those trained checkpoints
+3. **Run MAPS** ({Modular Alignment and Persistence Scoring}) to detect stable and reorganizing subnetworks
+4. **Save condensed outputs** into `Checkpoints_States_selectedGraphs/`
+5. **Generate paper figures** from the notebooks in `AnalysisScripts/`
 
 <p align="center">
-  <img src="README_assets/Figure2.png" alt="Figure 2" width="800"/>
+  <img src="README_assets/FullProc_v21.png" alt="Overview of the training and comparison pipeline" width="900"/>
 </p>
+
+This is the main end-to-end pipeline figure from the paper: a single quadruped is trained sequentially on walk, wiggle, and bob; actor weights are transferred across phases; plateau detection controls switching; and the resulting policies are compared on shared reference states to identify stable and reorganizing neural groups. :contentReference[oaicite:2]{index=2}
+
+### How to reproduce this pipeline view
+This figure is part of the paper overview rather than a standalone notebook output. The code path behind it is the full pipeline:
+
+- training and checkpoint generation in `Training_ObsCollection_Scripts/`
+- state recording using the recording scripts in that same folder
+- downstream MAPS analysis in `AnalysisScripts/`
+
+For the practical training entry point, see the training section at the bottom of this README and the full instructions in [`TRAINING_AND_SETUP.md`](TRAINING_AND_SETUP.md).
+
+---
+
+## Main result: the self-like subnetwork appears under continual learning
 
 <p align="center">
-  <img src="README_assets/Figure3.png" alt="Figure 3" width="800"/>
+  <img src="README_assets/Sketching_v17.png" alt="Visualization of the persistent self in static and variable conditions" width="900"/>
 </p>
 
-These plots are generated from:
+This figure gives the most intuitive visual summary of the paper: in the walk-only baseline, the cross-policy structure is fragmented, while in the continual walk→wiggle→bob condition, one dominant subnetwork remains visibly continuous across policies. In the paper, this is the qualitative “alluvial” view of the persistent self. :contentReference[oaicite:3]{index=3}
 
+### Generated with
 - `AnalysisScripts/MAPS_1Set_forPlots.ipynb`
 
-This notebook is the main entry point for several of the core paper figures. It is the best place to start if you want to inspect the main MAPS outputs on a single run and regenerate the central paper plots quickly.
-
-### How to regenerate
-1. Open `AnalysisScripts/MAPS_1Set_forPlots.ipynb`.
-2. Update the example model / checkpoint / state paths if needed.
-3. Run the plotting blocks directly if the cached inputs already exist.
-4. If you want to recompute the underlying MAPS quantities instead of using cached results, run the earlier compute cells first.
+### How to reproduce
+1. Open `AnalysisScripts/MAPS_1Set_forPlots.ipynb`
+2. Set the model / checkpoint / state paths to the run you want to inspect
+3. Run the plotting blocks directly if the cached artifacts already exist
+4. If you want to recompute the underlying MAPS quantities from scratch, run the earlier compute cells first
 
 ### Notes
-- This notebook is one of the primary paper-figure notebooks.
-- For most users, using the cached artifacts is the intended route.
-- The notebook already contains example paths; in practice, you mainly swap in your own model paths and rerun.
+- This notebook is one of the main figure notebooks in the repository
+- It is the best place to start if you want a fast reproduction of the core paper visualizations
+- The notebook includes example paths; in practice, you mainly swap in your own paths and rerun
 
 ---
 
-## Across-run MAPS analysis and cached dataframe pipeline
+## Quantitative evidence for the persistent self-like subnetwork
 
-This part of the repository is used when the goal is not just to inspect one run, but to aggregate results across multiple runs.
+<p align="center">
+  <img src="README_assets/MAPS_WvsWSJ_v6.png" alt="Quantitative evidence for a persistent self-like subnetwork" width="900"/>
+</p>
 
-The relevant notebook is:
+This figure shows the core quantitative comparison between the constant-task and continual-learning conditions. The top panel shows the reordered neuron-neuron co-activation matrix and inferred subnetwork boundaries, while the bottom panel shows per-neuron persistence score in the same ordering. It is the clearest one-shot quantitative demonstration that two successful policies can have very different internal organization. :contentReference[oaicite:4]{index=4}
 
+### Generated with
+- `AnalysisScripts/MAPS_1Set_forPlots.ipynb`
+
+### How to reproduce
+1. Open `AnalysisScripts/MAPS_1Set_forPlots.ipynb`
+2. Point the notebook at the relevant cached states / checkpoints
+3. Run the plotting cells if the cached MAPS inputs are already available
+4. Run the earlier compute section if you want to regenerate the internal quantities from scratch
+
+### Related notebook for across-run processing
 - `AnalysisScripts/MAPS_acrossruns_w_plot.ipynb`
 
-This notebook is structured in two stages:
+That notebook is structured in two stages:
+- a long analysis stage that computes the block structure across runs
+- a condensed plotting stage that reuses saved outputs from `Checkpoints_States_selectedGraphs/`
 
-1. **Long analysis stage**  
-   Computes the block structure and related MAPS quantities across runs.
-
-2. **Condensed plotting stage**  
-   Saves and reuses condensed dataframe-style outputs stored under  
-   `Checkpoints_States_selectedGraphs/`
-
-This means that once the expensive stage has been run once, the later plots can usually be regenerated quickly.
-
-### How to use it
-- If you want to recompute everything, run the first major code block.
-- If you only want the plots, use the cached condensed outputs and run the plotting block(s).
-
-### Why this matters
-This is the main notebook to use when you want to understand how the repository’s cached analysis products are structured and reused.
+So if you want to recompute everything, run the first major block; if you only want the plots, use the cached condensed outputs and run the later plotting blocks.
 
 ---
 
-## Figure 5: transition persistence overlays
+## Persistence and size across cycles
 
 <p align="center">
-  <img src="README_assets/Figure5.png" alt="Figure 5" width="850"/>
+  <img src="README_assets/Robust_v9.png" alt="Subnetwork persistence and size across cycles" width="900"/>
 </p>
 
-This figure is generated from:
+This figure tracks mean persistence score and self-subnetwork size across 50 cycles for both hidden layers. In the continual-learning condition, the self subnetwork separates clearly from the pooled task subnetwork; in the walk-only control, that separation is weaker and the self-like subnetwork remains much smaller. :contentReference[oaicite:5]{index=5}
 
+### Generated with
+- `AnalysisScripts/MAPS_acrossruns_w_plot.ipynb`
+
+### How to reproduce
+1. Open `AnalysisScripts/MAPS_acrossruns_w_plot.ipynb`
+2. If you want the full recomputation, run the first long analysis block
+3. If you only want the figure, load the cached condensed outputs from `Checkpoints_States_selectedGraphs/`
+4. Run the plotting block for the across-run aggregate figures
+
+### Runtime note
+- full raw MAPS recomputation across runs: **a couple of hours**
+- plotting from cached condensed outputs: **quick**
+
+---
+
+## Where reorganization happens at behavior switches
+
+<p align="center">
+  <img src="README_assets/evo_v7.png" alt="Reorganization concentrates in task-like regions at behavior switches" width="900"/>
+</p>
+
+This figure shows that the strongest reorganization at behavior switches concentrates outside the dominant self-like region. The self-like subnetwork changes less, while the task-like regions relearn more aggressively to support the newly acquired behavior. :contentReference[oaicite:6]{index=6}
+
+### Generated with
 - `AnalysisScripts/Transition_persistence_Overlay_2plot.ipynb`
 
-This notebook computes the transition persistence views and then overlays them into the final figure.
-
-### How to regenerate
-1. Open `AnalysisScripts/Transition_persistence_Overlay_2plot.ipynb`.
-2. Run the compute blocks first to generate the needed intermediate graph products.
-3. Run the overlay / plotting blocks to assemble the final figure.
+### How to reproduce
+1. Open `AnalysisScripts/Transition_persistence_Overlay_2plot.ipynb`
+2. Run the compute blocks to generate the transition persistence products
+3. Run the overlay / plotting blocks to assemble the final figure
 
 ### Notes
-- The code is already organized in the order needed to reproduce the figure.
-- If the cached intermediate products are present, regeneration is much faster.
+- The notebook is already structured in the order needed for this figure
+- If the cached intermediate products are already present, regeneration is much faster
 
 ---
 
-## Significance tests used in the paper
+## Sensitivity analysis
 
-The statistical significance tests are in:
-
-- `AnalysisScripts/Z_test.ipynb`
-
-This notebook contains the significance calculations used to quantify the separation between the persistent “self” subnetwork and the more task-specific remainder.
-
-### How to use it
-1. Open `AnalysisScripts/Z_test.ipynb`.
-2. Update any paths if you are pointing to a different set of aggregated outputs.
-3. Run the notebook cells to reproduce the reported statistics.
-
-This is the notebook to use if you want to reproduce the key statistical claims without rerunning the full plotting pipeline.
-
----
-
-## Sensitivity analysis (supplementary)
-
-<p align="center">
-  <img src="README_assets/FigureS1.png" alt="Sensitivity analysis" width="850"/>
-</p>
-
-The sensitivity analysis is generated from:
+The repository also includes the sensitivity analysis used in the supplementary material. These figures are generated from:
 
 - `AnalysisScripts/MAPS_Ksense_Analysis.ipynb`
 
-This notebook follows the same general pattern as the across-runs MAPS notebook, but is specialized for the sensitivity analysis shown in the supplementary material.
+<p align="center">
+  <img src="README_assets/Tsense_P_v2.png" alt="Threshold sensitivity plot P" width="700"/>
+</p>
 
-### How to regenerate
-- Run the full compute section to rebuild the sensitivity results from scratch.
-- Or, when the cached products are already available, run the later plotting section directly.
+<p align="center">
+  <img src="README_assets/Tsense_s_v2.png" alt="Threshold sensitivity plot s" width="700"/>
+</p>
+
+<p align="center">
+  <img src="README_assets/Tsense_HM_v2.png" alt="Threshold sensitivity heatmap" width="700"/>
+</p>
+
+### Generated with
+- `AnalysisScripts/MAPS_Ksense_Analysis.ipynb`
+
+### How to reproduce
+1. Open `AnalysisScripts/MAPS_Ksense_Analysis.ipynb`
+2. Run the full compute section if you want to regenerate the sensitivity analysis from scratch
+3. Or, if the cached outputs are already present, run the later plotting section directly
+
+### Notes
+- This notebook follows the same overall pattern as the across-runs MAPS notebook
+- It is specialized for the threshold / sensitivity analyses used in the supplementary material
 
 ---
 
-## Supplementary visualization / tessellation analysis
+## Significance tests
 
-This analysis is generated from:
+The statistical significance calculations are in:
 
-- `AnalysisScripts/Visualisation_tesselation.ipynb`
+- `AnalysisScripts/Z_test.ipynb`
 
-This notebook produces the tessellation-style supplementary visualization.
+### What it does
+This notebook contains the significance tests used to quantify the separation between the persistent self-like subnetwork and the more task-specific remainder.
 
-### How to use it
-- Open the notebook
-- update paths if needed
-- run the cells in order
+### How to reproduce
+1. Open `AnalysisScripts/Z_test.ipynb`
+2. Update any paths if needed
+3. Run the cells to regenerate the reported statistics
+
+This is the notebook to use if you want to reproduce the main statistical claims without rerunning the full plotting pipeline.
 
 ---
 
-## Validation triplets and full-folder processing
+## Other analysis entry points
 
-For generating triplet-style MAPS outputs across a folder of checkpoints or models, use:
-
+### Across-folder validation processing
 - `AnalysisScripts/maps_triplets.py`
 
-This is the main non-notebook analysis script in the repository.
+This is the main non-notebook script in the analysis folder. Use it when you want to generate MAPS outputs for a full folder of models / checkpoints rather than working one run at a time.
 
-### Typical use
-This script is useful when you want to process a whole folder for validation-style analyses rather than manually stepping through a notebook one case at a time.
+### Rollout plotting example
+- `AnalysisScripts/rollout_plot_sample.ipynb`
 
----
+A sample notebook showing how rollout visualizations are generated.
 
-## Sample rollout / visualization utilities
+### Supplementary visualization / tessellation
+- `AnalysisScripts/Visualisation_tesselation.ipynb`
 
-Additional analysis-side utilities include:
-
-- `AnalysisScripts/rollout_plot_sample.ipynb`  
-  Example rollout plotting and inspection.
-
-These are helpful for understanding how trajectories or visual rollouts are displayed, but they are not the main entry point for reproducing the primary paper figures.
+This notebook is used for the tessellation-style supplementary visualization.
 
 ---
 
 ## Recommended entry points
 
-If you are visiting this repository for the first time:
-
 ### I want the main paper figures quickly
 Start with:
 - `AnalysisScripts/MAPS_1Set_forPlots.ipynb`
 - `AnalysisScripts/Transition_persistence_Overlay_2plot.ipynb`
-- `AnalysisScripts/Z_test.ipynb`
-
-### I want the across-run aggregate analysis
-Start with:
 - `AnalysisScripts/MAPS_acrossruns_w_plot.ipynb`
+
+### I want the significance statistics
+Start with:
+- `AnalysisScripts/Z_test.ipynb`
 
 ### I want the supplementary sensitivity analysis
 Start with:
 - `AnalysisScripts/MAPS_Ksense_Analysis.ipynb`
 
-### I want the full training / recording pipeline
-Go to:
+### I want the full training / rollout / state collection pipeline
+See:
 - [`TRAINING_AND_SETUP.md`](TRAINING_AND_SETUP.md)
 
 ---
@@ -255,52 +273,41 @@ Approximate runtimes on our setup:
 - **Plotting from cached condensed outputs:** **quick**
 - **Regenerating an individual figure notebook from cache:** **usually quick**
 
-Because of this, the repository is designed so that readers can reproduce the main plots from cached outputs without repeating the full training pipeline.
+Because of this, the intended reproduction path for most readers is to use the cached artifacts in `Checkpoints_States_selectedGraphs/`.
 
 ---
 
-## From training to figures
+## Training and recording states
 
-At a high level, the full workflow is:
+The training and rollout side of the pipeline lives in:
 
-1. Train policies across the desired behavior sequence
-2. Record states / observations / videos
-3. Run MAPS analysis
-4. Save condensed outputs into `Checkpoints_States_selectedGraphs/`
-5. Regenerate the paper figures from the notebooks in `AnalysisScripts/`
+- `Training_ObsCollection_Scripts/`
 
-The training and rollout collection side of this pipeline is documented in [`TRAINING_AND_SETUP.md`](TRAINING_AND_SETUP.md).
+The main training entry point is:
 
----
+- `Training_ObsCollection_Scripts/Isaac_TrainingLauncher.py`
 
-## Validation note
+Most of the other files in that directory are helpers for:
+- rollout recording
+- state collection
+- config handling
+- playback
+- sim-to-real utilities
+- video generation
 
-This repository accompanies the paper:
+For the full training / setup guide, go to:
 
-**Evidence of an Emergent “Self” in Continual Robot Learning**
+- [`TRAINING_AND_SETUP.md`](TRAINING_AND_SETUP.md)
 
-**Authors**  
-Adidev Jhunjhunwala  
-Judah Goldfeder  
-Hod Lipson  
+A representative launch command is:
 
-**Affiliations**  
-Creative Machines Lab, Department of Mechanical Engineering, Columbia University, New York, NY  
-Creative Machines Lab, Department of Computer Science, Columbia University, New York, NY  
-
-**Correspondence**  
-aj3337@columbia.edu
-
----
-
-## Citation
-
-If you use this repository, please cite the associated paper / preprint. A BibTeX entry and preprint link can be added here once the public citation details are finalized.
-
-```bibtex
-@article{jhunjhunwala2026self,
-  title={Evidence of an Emergent ``Self'' in Continual Robot Learning},
-  author={Jhunjhunwala, Adidev and Goldfeder, Judah and Lipson, Hod},
-  journal={},
-  year={2026}
-}
+```bash
+CUDA_VISIBLE_DEVICES=0 ./isaaclab.sh -p /home/adi/projects/CreativeMachinesAnt/Isaac/Training_ObsCollection_Scripts/Isaac_TrainingLauncher.py \
+  --task Ant-Walk-v0 --gym_env_id Isaac-Ant-Direct-v0 \
+  --cfg_yaml /home/adi/projects/CreativeMachinesAnt/Isaac/Training_ObsCollection_Scripts/cfg/rlg_walk_new_150_relu.yaml \
+  --player_yaml /home/adi/projects/CreativeMachinesAnt/Isaac/Training_ObsCollection_Scripts/cfg/rlg_play_sac_ant_150_relu.yaml \
+  --num_envs 8192 --n_cycles 2 --phase_order walk --updates_per_step 32 \
+  --plateau_min_steps 250000 --max_steps_phase 500000 \
+  --override_warmup_steps 10000 --log_interval_s 30 --headless --lambda_back 1 \
+  --gpu 0 --record_every 0 --video_gpu 6 --video_wait_pct 50 --video_wait_s 30 \
+  --run_tag WSJ_att69_WalkOnly_relu_0 --ckpt_label WSJ_att69_WalkOnly_relu_0 --seed 0
