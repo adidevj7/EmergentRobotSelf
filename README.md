@@ -25,7 +25,7 @@ For most users, the fastest route is:
 - update the model / checkpoint paths if needed
 - run the plotting cells
 
-For full training and rollout generation, see [`TRAINING_AND_SETUP.md`](TRAINING_AND_SETUP.md).
+For full training and rollout generation, see [`TRAINING_AND_SETUP.md`](README_assets/TRAINING_AND_SETUP.md).
 
 ---
 
