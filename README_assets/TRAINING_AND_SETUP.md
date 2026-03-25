@@ -1,9 +1,3 @@
-
----
-
-# `TRAINING_AND_SETUP.md`
-
-```markdown
 # Training and Setup
 
 This document describes the training, rollout recording, and state collection side of the pipeline used in **“Evidence of an Emergent ‘Self’ in Continual Robot Learning.”**
