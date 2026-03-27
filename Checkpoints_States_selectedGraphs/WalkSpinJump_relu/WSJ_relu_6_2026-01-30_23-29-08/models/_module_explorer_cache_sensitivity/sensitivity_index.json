@@ -1,0 +1,174 @@
+{
+  "run_name": "WSJ_att69_relu_6_2026-01-30_23-29-08",
+  "models_dir": "/Users/adi/Desktop/Robustness/WSJ_att69_relu_6_2026-01-30_23-29-08/models",
+  "configs": [
+    {
+      "tag": "k2_10_a0p05",
+      "k_min": 2,
+      "k_max": 10,
+      "alpha_small_k": 0.05
+    },
+    {
+      "tag": "k2_10_a0",
+      "k_min": 2,
+      "k_max": 10,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k2_10_a0p01",
+      "k_min": 2,
+      "k_max": 10,
+      "alpha_small_k": 0.01
+    },
+    {
+      "tag": "k2_10_a0p04",
+      "k_min": 2,
+      "k_max": 10,
+      "alpha_small_k": 0.04
+    },
+    {
+      "tag": "k2_10_a0p06",
+      "k_min": 2,
+      "k_max": 10,
+      "alpha_small_k": 0.06
+    },
+    {
+      "tag": "k2_10_a0p08",
+      "k_min": 2,
+      "k_max": 10,
+      "alpha_small_k": 0.08
+    },
+    {
+      "tag": "k2_10_a0p1",
+      "k_min": 2,
+      "k_max": 10,
+      "alpha_small_k": 0.1
+    },
+    {
+      "tag": "k2_10_a0p15",
+      "k_min": 2,
+      "k_max": 10,
+      "alpha_small_k": 0.15
+    },
+    {
+      "tag": "k2_10_a0p25",
+      "k_min": 2,
+      "k_max": 10,
+      "alpha_small_k": 0.25
+    },
+    {
+      "tag": "k3_14_a0p05",
+      "k_min": 3,
+      "k_max": 14,
+      "alpha_small_k": 0.05
+    },
+    {
+      "tag": "k2_30_a0",
+      "k_min": 2,
+      "k_max": 30,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k2_30_a0p1",
+      "k_min": 2,
+      "k_max": 30,
+      "alpha_small_k": 0.1
+    },
+    {
+      "tag": "k2_30_a0p5",
+      "k_min": 2,
+      "k_max": 30,
+      "alpha_small_k": 0.5
+    },
+    {
+      "tag": "k2_30_a1",
+      "k_min": 2,
+      "k_max": 30,
+      "alpha_small_k": 1.0
+    },
+    {
+      "tag": "k2_60_a0",
+      "k_min": 2,
+      "k_max": 60,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k2_60_a0p5",
+      "k_min": 2,
+      "k_max": 60,
+      "alpha_small_k": 0.5
+    },
+    {
+      "tag": "k2_60_a1",
+      "k_min": 2,
+      "k_max": 60,
+      "alpha_small_k": 1.0
+    },
+    {
+      "tag": "k5_80_a0",
+      "k_min": 5,
+      "k_max": 80,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k5_80_a0p5",
+      "k_min": 5,
+      "k_max": 80,
+      "alpha_small_k": 0.5
+    },
+    {
+      "tag": "k5_80_a1",
+      "k_min": 5,
+      "k_max": 80,
+      "alpha_small_k": 1.0
+    },
+    {
+      "tag": "k2_2_a0",
+      "k_min": 2,
+      "k_max": 2,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k4_4_a0",
+      "k_min": 4,
+      "k_max": 4,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k6_6_a0",
+      "k_min": 6,
+      "k_max": 6,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k8_8_a0",
+      "k_min": 8,
+      "k_max": 8,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k12_12_a0",
+      "k_min": 12,
+      "k_max": 12,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k16_16_a0",
+      "k_min": 16,
+      "k_max": 16,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k24_24_a0",
+      "k_min": 24,
+      "k_max": 24,
+      "alpha_small_k": 0.0
+    },
+    {
+      "tag": "k32_32_a0",
+      "k_min": 32,
+      "k_max": 32,
+      "alpha_small_k": 0.0
+    }
+  ]
+}
