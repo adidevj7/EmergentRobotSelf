@@ -11,3 +11,26 @@ __pycache__/
 .git_old_backup/
 Checkpoints_States_selectedGraphs/WalkSpinJump_relu/**/plot_cache_npz/
 Checkpoints_States_selectedGraphs/WalkSpinJump_relu/**/_module_explorer_tau_sweep/
+
+# Continual World generated files
+ContinualWorld_ForSelf/continual_world/__pycache__/
+ContinualWorld_ForSelf/continual_world/**/__pycache__/
+ContinualWorld_ForSelf/continual_world/checkpoints/
+ContinualWorld_ForSelf/continual_world/runs/
+ContinualWorld_ForSelf/continual_world/logs/
+ContinualWorld_ForSelf/continual_world/results/
+ContinualWorld_ForSelf/continual_world/*.zip
+ContinualWorld_ForSelf/cwRuns_Analysis.zip
+
+# Large checkpoint/state artifacts; upload separately as release assets
+Checkpoints_States_selectedGraphs/
+ContinualWorld_ForSelf/cwRuns_Analysis.zip
+ContinualWorld_ForSelf/continual_world/checkpoints/
+ContinualWorld_ForSelf/continual_world/runs/
+ContinualWorld_ForSelf/continual_world/logs/
+ContinualWorld_ForSelf/continual_world/results/
+ContinualWorld_ForSelf/continual_world/**/__pycache__/
+
+# Ignore generated images/plots
+*.png
+**/*.png
