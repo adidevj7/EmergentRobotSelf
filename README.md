@@ -29,6 +29,32 @@ For full training and rollout generation, see [`TRAINING_AND_SETUP.md`](README_a
 
 ---
 
+## Large release assets
+
+Large archives are stored as GitHub Release assets rather than committed directly to the repository. This keeps the Git history small while still making the data downloadable.
+
+### Hexapod archive
+
+The hexapod archive is available as split assets in the `hexapod-data-v1` release:
+
+- <https://github.com/adidevj7/EmergentRobotSelf/releases/tag/hexapod-data-v1>
+
+Download both parts:
+
+- `hexapod.zip.part-aa`
+- `hexapod.zip.part-ab`
+
+Then recombine and unzip them from the same directory:
+
+```bash
+cat hexapod.zip.part-* > hexapod.zip
+unzip hexapod.zip
+```
+
+These files are release assets, so they will not appear in the normal GitHub repository file browser.
+
+---
+
 ## Repository structure
 
 ### Analysis notebooks and scripts
@@ -239,6 +265,14 @@ A sample notebook showing how rollout visualizations are generated.
 - `AnalysisScripts/Visualisation_tesselation.ipynb`
 
 This notebook is used for the tessellation-style supplementary visualization.
+
+---
+
+## Continual World runs
+
+In addition to the MuJoCo / Isaac experiments, this repository includes a Continual World validation set using custom launch scripts written for the exact task schedules used in the paper. These runs cycle through fixed task families rather than single-task training: `triA`, `triB`, `triC`, `quadA`, and `pentaA`. For each family, I launched three independent repetitions where possible, producing runs such as `PostVal_triA`, `PostVal_triA_rep1`, `PostVal_triA_rep2`, and similarly for the other task sets. The run directories and logs are organized under the Continual World project, with analysis copies under `runs/Runs_Analysis/`.
+
+The analysis treats each accepted checkpoint as a point in the continual-learning trajectory and compares adjacent task transitions. For the main `triC` analysis, the pipeline loads TensorFlow actor checkpoints, computes hidden-layer activations over the saved rollout states, measures self/task persistence across transitions, selects the best replicate by the task-vs-self change gap, and generates tessellation / transition plots. This provides an independent non-locomotion check that the same self/task modularity analysis extends beyond the ant and hexapod settings.
 
 ---
 
